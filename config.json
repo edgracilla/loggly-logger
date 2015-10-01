@@ -1,0 +1,31 @@
+[
+  {
+	"name": "token",
+	"label": "Token",
+	"type": "String",
+	"required": true
+  },
+  {
+	"name": "subdomain",
+	"label": "Sub Domain", //Error, Message, Exception, Query (defaults to error)
+	"type": "String",
+	"required": true
+  },
+  {
+	"name": "loglevel",
+	"label": "Log Level", //info, error, exception, warning
+	"type": "String",
+	"required": false
+  },
+  {
+	"name": "tag",
+	"label": "Tag", //info, error, exception, warning
+	"type": "String",
+	"required": false
+  }
+
+]
+
+
+
+
