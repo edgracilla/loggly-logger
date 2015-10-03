@@ -3,17 +3,12 @@
 var inherits     = require('util').inherits,
 	EventEmitter = require('events').EventEmitter;
 
-var isString = function (val) {
-	return typeof val === 'string' || ((!!val && typeof val === 'object') && Object.prototype.toString.call(val) === '[object String]');
-};
-
 function Platform() {
 	if (!(this instanceof Platform)) return new Platform();
 
 	var self = this;
 
 	process.on('uncaughtException', function (error) {
-		console.error(error);
 		self.handleException(error);
 		process.exit(1);
 	});
@@ -30,8 +25,8 @@ Platform.init = function () {
 	process.on('message', function (m) {
 		if (m.type === 'ready')
 			self.emit('ready', m.data.options);
-		else if (m.type === 'data')
-			self.emit('data', m.data);
+		else if (m.type === 'log')
+			self.emit('log', m.data);
 	});
 };
 
@@ -42,25 +37,6 @@ Platform.prototype.notifyReady = function (callback) {
 	setImmediate(function () {
 		process.send({
 			type: 'ready'
-		});
-
-		callback();
-	});
-};
-
-Platform.prototype.log = function (title, description, callback) {
-	callback = callback || function () {
-		};
-
-	setImmediate(function () {
-		if (!title || !isString(title)) return callback(new Error('A valid log title is required.'));
-
-		process.send({
-			type: 'log',
-			data: {
-				title: title,
-				description: description
-			}
 		});
 
 		callback();

@@ -1,38 +1,37 @@
 'use strict';
 
-var platform    = require('./platform'),
-	winston = require('winston'),
+var _        = require('lodash'),
+	winston  = require('winston'),
+	platform = require('./platform'),
 	loglevel;
 
 require('winston-loggly');
 
 /*
- * Listen for the ready event.
- */
-platform.once('ready', function (options) {
-
-	winston.add(winston.transports.Loggly, {
-		token: options.token,
-		subdomain: options.subdomain,
-		tags: options.tag,
-		json:true
-	});
-
-	loglevel = options.loglevel;
-
-	platform.log('Connected to Loggly.');
-	platform.notifyReady(); // Need to notify parent process that initialization of this plugin is done.
-
-});
-
-/*
  * Listen for the data event.
  */
-platform.on('data', function (data) {
+platform.on('log', function (data) {
+	winston.log(loglevel, data, function (error) {
+		if (!error) return;
 
-	winston.log(loglevel,data, function(error) {
 		console.error('Error on Loggly.', error);
 		platform.handleException(error);
 	});
+});
 
+/*
+ * Listen for the ready event.
+ */
+platform.once('ready', function (options) {
+	var tags = (_.isEmpty(options.tags)) ? [] : options.tags.split(' ');
+	loglevel = options.loglevel || 'info';
+
+	winston.add(winston.transports.Loggly, {
+		token: '57485320-5b32-4f4b-aca9-d03c5c52bafd',
+		subdomain: 'reekohtest',
+		tags: tags,
+		json: true
+	});
+
+	platform.notifyReady();
 });
