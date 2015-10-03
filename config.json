@@ -1,30 +1,29 @@
-[
-  {
-	"name": "token",
+{
+  "token": {
 	"label": "Token",
 	"type": "String",
-	"required": true
+	"required": true,
+	"help": "Your Loggly token"
   },
-  {
-	"name": "subdomain",
-	"label": "Sub Domain", //Error, Message, Exception, Query (defaults to error)
+  "subdomain": {
+	"label": "Sub Domain",
 	"type": "String",
-	"required": true
+	"required": true,
+	"help": "Your Loggly subdomain"
   },
-  {
-	"name": "loglevel",
-	"label": "Log Level", //info, error, exception, warning
+  "loglevel": {
+	"label": "Log Level",
 	"type": "String",
-	"required": false
+	"required": false,
+	"help": "The log level to use"
   },
-  {
-	"name": "tag",
-	"label": "Tag", //info, error, exception, warning
+  "tags": {
+	"label": "Tag",
 	"type": "String",
-	"required": false
+	"required": false,
+	"help": "Loggly tags to use (separated by spaces)."
   }
-
-]
+}
 
 
 
