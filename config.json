@@ -3,25 +3,25 @@
 	"label": "Token",
 	"type": "String",
 	"required": true,
-	"help": "Your Loggly token"
+	"help": "Specify your Loggly token"
   },
   "subdomain": {
 	"label": "Sub Domain",
 	"type": "String",
 	"required": true,
-	"help": "Your Loggly subdomain"
+	"help": "Specify your Loggly subdomain"
   },
   "loglevel": {
 	"label": "Log Level",
 	"type": "String",
 	"required": false,
-	"help": "The log level to use"
+	"help": "(Optional) Specify the default log level to use"
   },
   "tags": {
 	"label": "Tag",
 	"type": "String",
 	"required": false,
-	"help": "Loggly tags to use (separated by spaces)."
+	"help": "(Optional) Specify the Loggly tags to use (separated by spaces)."
   }
 }
 
