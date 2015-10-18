@@ -1,5 +1,10 @@
 'use strict';
 
+const TOKEN     = '57485320-5b32-4f4b-aca9-d03c5c52bafd',
+	  SUBDOMAIN = 'reekohtest',
+	  LOG_LEVEL = 'info',
+	  TAGS      = 'tag1 tag2 tag3';
+
 var cp     = require('child_process'),
 	should = require('should'),
 	logger;
@@ -35,10 +40,10 @@ describe('Loggly Logger', function () {
 				type: 'ready',
 				data: {
 					options: {
-						token: '57485320-5b32-4f4b-aca9-d03c5c52bafd',
-						subdomain: 'reekohtest',
-						loglevel: 'info',
-						tags: 'tag1 tag2 tag3'
+						token: TOKEN,
+						subdomain: SUBDOMAIN,
+						log_level: LOG_LEVEL,
+						tags: TAGS
 					}
 				}
 			}, function (error) {

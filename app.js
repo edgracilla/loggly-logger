@@ -3,7 +3,7 @@
 var _        = require('lodash'),
 	winston  = require('winston'),
 	platform = require('./platform'),
-	loglevel;
+	logLevel;
 
 require('winston-loggly');
 
@@ -11,7 +11,7 @@ require('winston-loggly');
  * Listen for the data event.
  */
 platform.on('log', function (data) {
-	winston.log(loglevel, data, function (error) {
+	winston.log(logLevel, data, function (error) {
 		if (!error) return;
 
 		console.error('Error on Loggly.', error);
@@ -24,11 +24,11 @@ platform.on('log', function (data) {
  */
 platform.once('ready', function (options) {
 	var tags = (_.isEmpty(options.tags)) ? [] : options.tags.split(' ');
-	loglevel = options.loglevel || 'info';
+	logLevel = options.log_level || 'info';
 
 	winston.add(winston.transports.Loggly, {
-		token: '57485320-5b32-4f4b-aca9-d03c5c52bafd',
-		subdomain: 'reekohtest',
+		token: options.token,
+		subdomain: options.subdomain,
 		tags: tags,
 		json: true
 	});
