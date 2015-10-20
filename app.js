@@ -1,7 +1,6 @@
 'use strict';
 
-var _        = require('lodash'),
-	winston  = require('winston'),
+var winston  = require('winston'),
 	platform = require('./platform'),
 	logLevel;
 
@@ -23,7 +22,9 @@ platform.on('log', function (data) {
  * Listen for the ready event.
  */
 platform.once('ready', function (options) {
+	var _ = require('lodash');
 	var tags = (_.isEmpty(options.tags)) ? [] : options.tags.split(' ');
+
 	logLevel = options.log_level || 'info';
 
 	winston.add(winston.transports.Loggly, {
@@ -33,5 +34,6 @@ platform.once('ready', function (options) {
 		json: true
 	});
 
+	platform.log('Loggly Logger Initialized.');
 	platform.notifyReady();
 });
