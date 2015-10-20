@@ -34,6 +34,5 @@ platform.once('ready', function (options) {
 		json: true
 	});
 
-	platform.log('Loggly Logger Initialized.');
 	platform.notifyReady();
 });
