@@ -15,6 +15,10 @@ describe('Loggly Logger', function () {
 	after('terminate child process', function (done) {
 		this.timeout(5000);
 
+		logger.send({
+			type: 'close'
+		});
+
 		setTimeout(function () {
 			logger.kill('SIGKILL');
 			done();
