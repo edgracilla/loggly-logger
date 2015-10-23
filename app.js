@@ -1,6 +1,7 @@
 'use strict';
 
-var winston  = require('winston'),
+var isJSON = require('is-json'),
+	winston  = require('winston'),
 	platform = require('./platform'),
 	logLevel;
 
@@ -9,8 +10,11 @@ require('winston-loggly');
 /*
  * Listen for the data event.
  */
-platform.on('log', function (data) {
-	winston.log(logLevel, data, function (error) {
+platform.on('log', function (logData) {
+	if (isJSON(logData))
+		logData = JSON.parse(logData);
+
+	winston.log(logLevel, logData, function (error) {
 		if (!error) return;
 
 		console.error('Error on Loggly.', error);
