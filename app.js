@@ -26,8 +26,19 @@ platform.on('log', function (logData) {
  * Event to listen to in order to gracefully release all resources bound to this service.
  */
 platform.on('close', function () {
-	winston.loggers.close();
-	platform.notifyClose();
+	var domain = require('domain');
+	var d = domain.create();
+
+	d.on('error', function(error) {
+		console.error(error);
+		platform.handleException(error);
+		platform.notifyClose();
+	});
+
+	d.run(function() {
+		winston.loggers.close();
+		platform.notifyClose();
+	});
 });
 
 /*
