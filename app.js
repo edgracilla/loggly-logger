@@ -67,8 +67,8 @@ platform.on('close', function () {
  * Listen for the ready event.
  */
 platform.once('ready', function (options) {
-	var _ = require('lodash');
-	var tags = (_.isEmpty(options.tags)) ? [] : options.tags.split(' ');
+	var isEmpty = require('lodash.isempty');
+	var tags = (isEmpty(options.tags)) ? [] : options.tags.split(' ');
 
 	level = options.log_level || 'info';
 
