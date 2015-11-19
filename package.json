@@ -1,7 +1,7 @@
 {
   "name": "loggly-logger",
   "description": "Logentries Logger Plugin for the Reekoh IoT Platform",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "author": "Reekoh, Inc.",
   "main": "app.js",
   "scripts": {
@@ -12,8 +12,8 @@
     "url": "https://github.com/Reekoh/loggly-logger"
   },
   "dependencies": {
-    "lodash": "^3.10.1",
-    "winston": "^2.0.0",
+    "lodash.isempty": "^3.0.4",
+    "winston": "^2.1.1",
     "winston-loggly": "^1.2.0"
   },
   "devDependencies": {
