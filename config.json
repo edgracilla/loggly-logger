@@ -1,7 +1,7 @@
 {
   "token": {
 	"label": "Token",
-	"type": "String",
+	"type": "Password",
 	"required": true,
 	"help": "Your Loggly token"
   },
