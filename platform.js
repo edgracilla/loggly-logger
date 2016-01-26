@@ -1,8 +1,5 @@
 'use strict';
 
-var inherits     = require('util').inherits,
-	EventEmitter = require('events').EventEmitter;
-
 /**
  * Utility function to validate Error Objects
  * @param val The value to be evaluated.
@@ -20,54 +17,52 @@ var isError = function (val) {
 function Platform() {
 	if (!(this instanceof Platform)) return new Platform();
 
-	EventEmitter.call(this);
+	require('events').EventEmitter.call(this);
 	Platform.init.call(this);
 }
 
-inherits(Platform, EventEmitter);
+require('util').inherits(Platform, require('events').EventEmitter);
 
 /**
  * Init function for Platform.
  */
 Platform.init = function () {
-	var self = this;
+	process.on('SIGINT', () => {
+		this.emit('close');
 
-	process.on('SIGINT', function () {
-		self.emit('close');
-
-		setTimeout(function () {
-			self.removeAllListeners();
+		setTimeout(() => {
+			this.removeAllListeners();
 			process.exit();
 		}, 2000);
 	});
 
-	process.on('SIGTERM', function () {
-		self.emit('close');
+	process.on('SIGTERM', () => {
+		this.emit('close');
 
-		setTimeout(function () {
-			self.removeAllListeners();
+		setTimeout(() => {
+			this.removeAllListeners();
 			process.exit();
 		}, 2000);
 	});
 
-	process.on('uncaughtException', function (error) {
+	process.on('uncaughtException', (error) => {
 		console.error('Uncaught Exception', error);
-		self.handleException(error);
-		self.emit('close');
+		this.handleException(error);
+		this.emit('close');
 
-		setTimeout(function () {
-			self.removeAllListeners();
+		setTimeout(() => {
+			this.removeAllListeners();
 			process.exit(1);
 		}, 2000);
 	});
 
-	process.on('message', function (m) {
+	process.on('message', (m) => {
 		if (m.type === 'ready')
-			self.emit('ready', m.data.options);
+			this.emit('ready', m.data.options);
 		else if (m.type === 'log')
-			self.emit('log', m.data);
+			this.emit('log', m.data);
 		else if (m.type === 'close')
-			self.emit('close');
+			this.emit('close');
 	});
 };
 
@@ -79,7 +74,7 @@ Platform.prototype.notifyReady = function (callback) {
 	callback = callback || function () {
 		};
 
-	setImmediate(function () {
+	setImmediate(() => {
 		process.send({
 			type: 'ready'
 		}, callback);
@@ -94,7 +89,7 @@ Platform.prototype.notifyClose = function (callback) {
 	callback = callback || function () {
 		};
 
-	setImmediate(function () {
+	setImmediate(() => {
 		process.send({
 			type: 'close'
 		}, callback);
@@ -110,7 +105,7 @@ Platform.prototype.handleException = function (error, callback) {
 	callback = callback || function () {
 		};
 
-	setImmediate(function () {
+	setImmediate(() => {
 		if (!isError(error)) return callback(new Error('A valid error object is required.'));
 
 		process.send({
