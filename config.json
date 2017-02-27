@@ -1,29 +1,32 @@
-{
-  "token": {
-	"label": "Token",
-	"type": "Password",
-	"required": true,
-	"help": "Your Loggly token"
-  },
-  "subdomain": {
-	"label": "Sub Domain",
-	"type": "String",
-	"required": true,
-	"help": "Your Loggly subdomain"
-  },
-  "log_level": {
-	"label": "Log Level",
-	"type": "String",
-	"required": false,
-	"help": "(Optional) Specify the log level to use."
-  },
-  "tags": {
-	"label": "Tags",
-	"type": "String",
-	"required": false,
-	"help": "(Optional) Specify the Loggly tags to use (separated by spaces)."
+ {
+   "token": {
+   "label": "Token",
+     "type": "Password",
+     "required": true,
+     "help": "Your Loggly token"
+ },
+   "subdomain": {
+   "label": "Sub Domain",
+     "type": "String",
+     "required": true,
+     "maxLength":"60",
+     "help": "Your Loggly subdomain"
+ },
+   "logLevel": {
+   "label": "Log Level",
+     "type": "String",
+     "required": false,
+     "maxLength":"60",
+     "help": "(Optional) Specify the log level to use."
+ },
+   "tags": {
+   "label": "Tags",
+     "type": "String",
+     "required": false,
+     "maxLength":"60",
+     "help": "(Optional) Specify the Loggly tags to use (separated by spaces)."
   }
-}
+ }
 
 
 
