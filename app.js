@@ -1,83 +1,56 @@
-'use strict';
+'use strict'
 
-var domain   = require('domain'),
-	winston  = require('winston'),
-	platform = require('./platform'),
-	level;
+const reekoh = require('reekoh')
+const _plugin = new reekoh.plugins.Logger()
 
-require('winston-loggly');
+const domain = require('domain')
+const winston = require('winston')
+const isEmpty = require('lodash.isempty')
 
-/*
- * Listen for the data event.
- */
-platform.on('log', function (logData) {
-	var d = domain.create();
+require('winston-loggly')
 
-	d.once('error', function () {
-		winston.log(level, logData, function (error) {
-			if (error) {
-				console.error('Error on Loggly.', error);
-				platform.handleException(error);
-			}
+_plugin.on('log', (logData) => {
+  let d = domain.create()
 
-			d.exit();
-		});
-	});
+  d.once('error', (error) => {
+    console.error(error)
+    _plugin.logException(error)
+    d.exit()
+  })
 
-	d.run(function () {
-		logData = JSON.parse(logData);
+  d.run(() => {
+    let logLevel = _plugin.config.logLevel || 'info'
 
-		var logLevel = level;
+    if (logData.level) {
+      logLevel = logData.level
+      delete logData.level
+    }
+    winston.log(logLevel, logData, (error) => {
+      if (error) {
+        console.error('Error on Loggly.', error)
+        _plugin.logException(error)
+      }
+      _plugin.log(JSON.stringify({
+        title: 'Log sent to Loggly',
+        data: logData
+      }))
 
-		if (logData.level) {
-			logLevel = logData.level;
-			delete logData.level;
-		}
+      d.exit()
+    })
+  })
+})
 
-		winston.log(logLevel, logData, function (error) {
-			if (error) {
-				console.error('Error on Loggly.', error);
-				platform.handleException(error);
-			}
+_plugin.once('ready', () => {
+  let tags = (isEmpty(_plugin.config.tags)) ? [] : _plugin.config.tags.split(' ')
 
-			d.exit();
-		});
-	});
-});
+  winston.add(winston.transports.Loggly, {
+    token: _plugin.config.token,
+    subdomain: _plugin.config.subdomain,
+    tags: tags,
+    json: true
+  })
+  _plugin.log('Loggly has been initialized.')
+  _plugin.emit('init')
+})
 
-/*
- * Event to listen to in order to gracefully release all resources bound to this service.
- */
-platform.on('close', function () {
-	var d = domain.create();
-
-	d.on('error', function (error) {
-		console.error(error);
-		platform.handleException(error);
-		platform.notifyClose();
-	});
-
-	d.run(function () {
-		winston.loggers.close();
-		platform.notifyClose();
-	});
-});
-
-/*
- * Listen for the ready event.
- */
-platform.once('ready', function (options) {
-	var isEmpty = require('lodash.isempty');
-	var tags = (isEmpty(options.tags)) ? [] : options.tags.split(' ');
-
-	level = options.log_level || 'info';
-
-	winston.add(winston.transports.Loggly, {
-		token: options.token,
-		subdomain: options.subdomain,
-		tags: tags,
-		json: true
-	});
-
-	platform.notifyReady();
-});
+module.exports = _plugin
