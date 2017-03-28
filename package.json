@@ -1,31 +1,35 @@
 {
   "name": "loggly-logger",
-  "version": "1.0.1",
-  "description": "Logentries Logger Plugin for the Reekoh IoT Platform",
+  "version": "1.0.0",
+  "description": "Loggly Logger Plugin for the Reekoh IoT Platform",
   "main": "app.js",
   "scripts": {
     "test": "gulp lint"
   },
-  "author": "reekoh",
+  "author": "Reekoh, Inc.",
   "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Reekoh/loggly-logger"
+  },
   "dependencies": {
-    "amqp": "^0.2.6",
-    "amqplib": "^0.5.1",
-    "reekoh": "^1.0.1",
-    "lodash.isempty": "^4.2.1",
-    "winston": "^2.1.1",
-    "winston-loggly": "^1.2.0"
+    "amqp": "=0.2.6",
+    "amqplib": "=0.5.1",
+    "reekoh": "=1.0.2",
+    "lodash.isempty": "=4.2.1",
+    "winston": "=2.1.1",
+    "winston-loggly": "=1.2.0"
   },
   "devDependencies": {
-    "gulp": "^3.9.1",
-    "gulp-cli": "^1.2.1",
-    "gulp-jshint": "^2.0.1",
-    "gulp-json-lint": "^0.1.0",
-    "gulp-mocha": "^2.2.0",
-    "gulp-plumber": "^1.1.0",
-    "gulp-standard": "^8.0.4",
-    "jshint": "^2.9.4",
-    "mocha": "^2.5.3",
-    "should": "^9.0.2"
+    "gulp": "=3.9.1",
+    "gulp-cli": "=1.2.1",
+    "gulp-jshint": "=2.0.1",
+    "gulp-json-lint": "=0.1.0",
+    "gulp-mocha": "=2.2.0",
+    "gulp-plumber": "=1.1.0",
+    "gulp-standard": "=8.0.4",
+    "jshint": "=2.9.4",
+    "mocha": "=2.5.3",
+    "should": "=9.0.2"
   }
 }
