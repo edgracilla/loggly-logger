@@ -3,7 +3,6 @@ kind: Plugin
 metadata:
   name: Loggly Logger
   description: Loggly Logger Plugin for the Reekoh IoT Platform
-  documentation: README.md
   icon: asset/icon/reekoh200x200.png
   signupLink: https://myservice.com/signup # ??
   type: Logger
@@ -11,33 +10,34 @@ metadata:
   tags:
     - logger
     - loggly
-  config:
-    token:
-      label: Token
-      type: Password
-      maxLength: 1000
-      required: true
-      help: Your Loggly token
-    subdomain:
-      label: Sub Domain
-      type: String
-      required: true
-      maxLength: 1000
-      help: Your Loggly subdomain
-    logLevel:
-      label: Log Level
-      type: String
-      required: false
-      maxLength: 1000
-      help: "(Optional) Specify the log level to use."
-    tags:
-      label: Tags
-      type: String
-      required: false
-      maxLength: 1000
-      help: "(Optional) Specify the Loggly tags to use (separated by spaces)."
-      
+
   release:
     version: 1.0.0
     notes: path/to/RELEASENOTESv1.0.0.md # ??
-    image: path/to/docker/image # ??
+    documentation: README.md
+    config:
+      token:
+        label: Token
+        type: Password
+        maxLength: 1000
+        required: true
+        help: Your Loggly token
+      subdomain:
+        label: Sub Domain
+        type: String
+        required: true
+        maxLength: 1000
+        help: Your Loggly subdomain
+      logLevel:
+        label: Log Level
+        type: String
+        required: false
+        maxLength: 1000
+        help: "(Optional) Specify the log level to use."
+      tags:
+        label: Tags
+        type: String
+        required: false
+        maxLength: 1000
+        help: "(Optional) Specify the Loggly tags to use (separated by spaces)."
+        
